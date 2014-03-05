@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="MetaSearchEngins"
+  id="myeclipse.1394025118565"
+  context-root="/MetaSearchEngins"
+  j2ee-spec="5.0"
+  archive="MetaSearchEngins.war">
+  <attributes>
+    <attribute name="webrootdir" value="WebRoot" />
+  </attributes>
+</project-module>
+
