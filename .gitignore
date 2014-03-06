@@ -4,6 +4,7 @@
 
 *.pydevproject
 .project
+.class
 .metadata
 bin/
 tmp/
@@ -213,3 +214,5 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
+
+/MetaSearchEngins/WebRoot/WEB-INF/classes
