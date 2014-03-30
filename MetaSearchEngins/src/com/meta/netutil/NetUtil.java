@@ -29,28 +29,18 @@ public class NetUtil {
 		String result = null;
 
 		HttpClient client = new HttpClient();
-		// ���ô����������ַ�Ͷ˿�
-		// client.getHostConfiguration().setProxy("proxy_host_addr",proxy_port);
-		// ʹ��GET����������������Ҫͨ��HTTPS���ӣ���ֻ��Ҫ������URL�е�http����https
 		LOG.debug("request url:\t" + url);
 		HttpMethod method = new GetMethod(url);
-		// ʹ��POST����
-		// HttpMethod method = new PostMethod("http://java.sun.com";);
+
 		try {
-			// ִ��
 			client.executeMethod(method);
-			// ��ӡ���������ص�״̬
-			// System.out.println("====status line:" + method.getStatusLine());
-			LOG.debug("status line:\t"
-					+ method.getStatusLine().toString());
-			// ��ӡ���ص���Ϣ
+			LOG.debug("status line:\t" + method.getStatusLine().toString());
 			Header[] headers = method.getRequestHeaders();
 			for (int i = 0; i < headers.length; i++) {
-				LOG.debug("header" + (i + 1) + ":\t"
-						+ headers[i].getName() + ":" + headers[i].getValue());
+				LOG.debug("header" + (i + 1) + ":\t" + headers[i].getName()
+						+ ":" + headers[i].getValue());
 			}
 
-			// result = method.getResponseBodyAsString();
 			InputStream s = method.getResponseBodyAsStream();
 			BufferedReader in = new BufferedReader(new InputStreamReader(s,
 					"utf-8"));
@@ -60,24 +50,16 @@ public class NetUtil {
 				System.out.println("lovely: " + temp);
 			}
 			in.close();
-			// System.out.println("=====>" +
-			// TypeConversion.inputStream2String(s));
-			// ��ӡ���
-			// DebugUtil.htmlSave(method.getResponseBodyAsStream());
-			// DebugUtil.debug(result);
-			// �ͷ�����
 			method.releaseConnection();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		// System.out.println(result);
 		return result;
 	}
 
 	public String getPageContentT(String urlStr) {
 		URL url = null;
-		String temp;
+		LOG.debug("request url:\t" + urlStr);
 		StringBuffer sb = new StringBuffer();
 		try {
 			url = new URL(urlStr);
@@ -85,9 +67,10 @@ public class NetUtil {
 			conn.setDoOutput(true);
 			conn.setRequestProperty("User-Agent",
 					"Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1)");
+
 			InputStream input = conn.getInputStream();
 			String test = InputStream2String(input, "utf-8");
-			saveHtml("a", test);
+			// saveHtml("a", test);
 			sb.append(test);
 			System.out.println(test);
 		} catch (final MalformedURLException me) {

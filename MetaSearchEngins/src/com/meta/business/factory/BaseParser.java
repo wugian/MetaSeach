@@ -1,0 +1,81 @@
+package com.meta.business.factory;
+
+import java.io.UnsupportedEncodingException;
+import java.util.List;
+
+import com.meta.business.intertace.IParser;
+import com.meta.model.Result;
+import com.meta.netutil.NetUtil;
+
+public class BaseParser implements IParser {
+	public static final int GOOGLE = 0x00;
+	public static final int YAHOO = 0x01;
+	public static final int BAIDU = 0x02;
+
+	private static final String GOOGLE_BASE_URL = "https://www.google.com.hk/search?";
+	// + "newwindow=1&" + "safe=strict&" + "espv=210&es_sm=93&" +
+	// "q=java+%E8%8E%B7%E5%8F%96google%E6%90%9C%E7%B4%A2%E7%BB%93%E6%9E%9C&"
+	// +
+	// "oq=java+&" +
+	// "gs_l=serp.3.0.35i39l2j0l8.986529.988072.0.989910.2.2.0.0.0.0.281.419.0j1j1.2.0....0...1c..38.serp..0.2.414.xcR79jmSmlE";
+
+	NetUtil netUtil;
+
+	public BaseParser() {
+		netUtil = new NetUtil();
+	}
+
+	/**
+	 * get the basic result
+	 * 
+	 * @param pageContent
+	 * @return
+	 */
+	public List<Result> parsePage(String searchCotent) {
+		return null;
+	}
+
+	/**
+	 * get the search web page content
+	 * 
+	 * @param seachContent
+	 * @param type
+	 * @return the string of page
+	 */
+	public String getSearchContent(String seachContent, int type) {
+		String url = this.searchUrlConstruct(seachContent, type);
+		return netUtil.getPageContentT(url);
+	}
+
+	/**
+	 * not necessary convert the format of the search content
+	 * 
+	 * @return
+	 * @throws UnsupportedEncodingException
+	 */
+	public String formatConvert(String seachContent, String charset)
+			throws UnsupportedEncodingException {
+		return new String(seachContent.getBytes("UTF-8"), charset);
+	}
+
+	/**
+	 * get the basic search url,baidu,yahoo,google....
+	 * 
+	 * @return
+	 */
+	public String searchUrlConstruct(String seachContent, int type) {
+
+		StringBuffer url = new StringBuffer();
+		switch (type) {
+		case GOOGLE:
+			url.append(GOOGLE_BASE_URL);
+			url.append("&q=");
+			url.append(seachContent);
+			break;
+		default:
+			break;
+		}
+		return url.toString();
+	}
+
+}
