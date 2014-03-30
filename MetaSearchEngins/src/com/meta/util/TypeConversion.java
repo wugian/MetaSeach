@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * ÀàÐÍ×ª»¯¹¤¾ßÀà
+ * å¸¸ç”¨ç±»åž‹è½¬åŒ–ç±»
  * @author tezuka-pc
  *
  */

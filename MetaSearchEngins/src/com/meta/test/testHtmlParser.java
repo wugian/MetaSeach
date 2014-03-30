@@ -5,7 +5,6 @@ import java.net.MalformedURLException;
 
 import com.gargoylesoftware.htmlunit.BrowserVersion;
 import com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException;
-import com.gargoylesoftware.htmlunit.NicelyResynchronizingAjaxController;
 import com.gargoylesoftware.htmlunit.ScriptResult;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
@@ -16,26 +15,27 @@ public class testHtmlParser {
 			MalformedURLException, IOException {
 		final WebClient webClient = new WebClient();
 		final HtmlPage startPage = webClient.getPage("http://www.baidu.com");
-		System.out.println("±êÌâ:" + startPage.getTitleText());
+		System.out.println("ï¿½ï¿½ï¿½ï¿½:" + startPage.getTitleText());
 	}
 
 	public void testHomePage_Firefox() throws Exception {
 		String TargetURL = "http://person.sac.net.cn/pages/registration/sac-publicity.html";
 		// String TargetURL="http://www.baidu.com";
-		// Ä£ÄâÒ»¸öä¯ÀÀÆ÷
+		// Ä£ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		final WebClient webClient = new WebClient(BrowserVersion.FIREFOX_3_6);
 		// final WebClient webClient=new
 		// WebClient(BrowserVersion.FIREFOX_10,"http://myproxyserver",8000);
-		// //Ê¹ÓÃ´úÀí
+		// //Ê¹ï¿½Ã´ï¿½ï¿½ï¿½
 		final WebClient webClient2 = new WebClient(
 				BrowserVersion.INTERNET_EXPLORER_7);
-		// ÉèÖÃwebClientµÄÏà¹Ø²ÎÊý
-//		webClient.getOptions().setJavaScriptEnabled(true);
-//		webClient.getOptions().setActiveXNative(false);
-//		webClient.getOptions().setCssEnabled(false);
-//		webClient.getOptions().setThrowExceptionOnScriptError(false);
-//		webClient.setAjaxController(new NicelyResynchronizingAjaxController());
-		// Ä£Äâä¯ÀÀÆ÷´ò¿ªÒ»¸öÄ¿±êÍøÖ·
+		// ï¿½ï¿½ï¿½ï¿½webClientï¿½ï¿½ï¿½ï¿½Ø²ï¿½ï¿½ï¿½
+		// webClient.getOptions().setJavaScriptEnabled(true);
+		// webClient.getOptions().setActiveXNative(false);
+		// webClient.getOptions().setCssEnabled(false);
+		// webClient.getOptions().setThrowExceptionOnScriptError(false);
+		// webClient.setAjaxController(new
+		// NicelyResynchronizingAjaxController());
+		// Ä£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½ï¿½Ö·
 		final HtmlPage page = webClient.getPage(TargetURL);
 		System.out.println(page.asText());
 		System.out.println(page.getUrl());

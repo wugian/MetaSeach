@@ -23,7 +23,7 @@ public class HttpUtil {
 		try {
 			url = new URL(urlStr);
 
-			/** ÐÞ¸Ä ****************/
+			/** ï¿½Þ¸ï¿½ ****************/
 			URLConnection conn = url.openConnection();
 			conn.setRequestProperty("User-Agent",
 					"Mozilla/4.0 (compatible; MSIE 5.0; Windows NT; DigExt)");
@@ -37,18 +37,19 @@ public class HttpUtil {
 			// "Mozilla/4.0 (compatible; MSIE 5.0; Windows 7; DigExt)");
 			//
 			// BufferedReader in = new BufferedReader(new InputStreamReader(
-			// url.openStream(), ENCODE));// ¶ÁÈ¡ÍøÒ³È«²¿ÄÚÈÝ
+			// url.openStream(), ENCODE));// ï¿½ï¿½È¡ï¿½ï¿½Ò³È«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
 			while ((temp = in.readLine()) != null) {
 				sb.append(temp);
 			}
 			in.close();
 		} catch (final MalformedURLException me) {
-			System.out.println("ÄãÊäÈëµÄURL¸ñÊ½ÓÐÎÊÌâ!");
+			System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½URLï¿½ï¿½Ê½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½!");
 			me.getMessage();
 		} catch (final IOException e) {
 			e.printStackTrace();
 		}
+		System.out.println(sb.toString());
 		return sb.toString();
 	}
 
@@ -71,7 +72,7 @@ public class HttpUtil {
 	/**
 	 * 
 	 * @param s
-	 * @return »ñµÃÁ´½Ó
+	 * @return ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 */
 	public static List<String> getLink(String s) {
 		String regex;
@@ -88,7 +89,7 @@ public class HttpUtil {
 	/**
 	 * 
 	 * @param s
-	 * @return »ñµÃ½Å±¾´úÂë
+	 * @return ï¿½ï¿½Ã½Å±ï¿½ï¿½ï¿½ï¿½ï¿½
 	 */
 	public List<String> getScript(String s) {
 		String regex;
@@ -116,7 +117,7 @@ public class HttpUtil {
 	/**
 	 * 
 	 * @param s
-	 * @return »ñµÃCSS
+	 * @return ï¿½ï¿½ï¿½CSS
 	 */
 	public List<String> getCSS(String s) {
 		String regex;
@@ -133,7 +134,7 @@ public class HttpUtil {
 	/**
 	 * 
 	 * @param s
-	 * @return È¥µô±ê¼Ç
+	 * @return È¥ï¿½ï¿½ï¿½ï¿½ï¿½
 	 */
 	public static String outTag(final String s) {
 		return s.replaceAll("<.*?>", "");
@@ -142,8 +143,8 @@ public class HttpUtil {
 	public static void main(String[] args) {
 		// Test t = new Test();
 		// String content = t.getHtmlContent("http://www.taobao.com");
-		// //content = content.replaceAll("(<br>)+?", "\n");// ×ª»¯»»ÐÐ
-		// //content = content.replaceAll("<p><em>.*?</em></p>", "");// È¥Í¼Æ¬×¢ÊÍ
+		// //content = content.replaceAll("(<br>)+?", "\n");// ×ªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		// //content = content.replaceAll("<p><em>.*?</em></p>", "");// È¥Í¼Æ¬×¢ï¿½ï¿½
 		// System.out.println(content);
 		// System.out.println(t.getTitle(content));
 		// List<String> a = t.getNews(content);
@@ -152,6 +153,6 @@ public class HttpUtil {
 		// news.add(s.replaceAll("<.*?>", ""));
 		// }
 		// System.out.println(news);
-		// //¡­¡­ »ñÈ¡js¡¢cssµÈ²Ù×÷Ê¡ÂÔ
+		// //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¡jsï¿½ï¿½cssï¿½È²ï¿½ï¿½ï¿½Ê¡ï¿½ï¿½
 	}
 }
