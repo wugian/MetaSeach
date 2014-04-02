@@ -12,7 +12,11 @@ public class BaseParser implements IParser {
 	public static final int YAHOO = 0x01;
 	public static final int BAIDU = 0x02;
 
+	
+
 	private static final String GOOGLE_BASE_URL = "https://www.google.com.hk/search?";
+	// 在百度搜索中,浏览器URL有点问题,根URL后面应该是S?而不是#
+	private static final String BAIDU_BASE_URL = "http://www.baidu.com/s?";
 	// + "newwindow=1&" + "safe=strict&" + "espv=210&es_sm=93&" +
 	// "q=java+%E8%8E%B7%E5%8F%96google%E6%90%9C%E7%B4%A2%E7%BB%93%E6%9E%9C&"
 	// +
@@ -70,6 +74,11 @@ public class BaseParser implements IParser {
 		case GOOGLE:
 			url.append(GOOGLE_BASE_URL);
 			url.append("&q=");
+			url.append(seachContent);
+			break;
+		case BAIDU:
+			url.append(BAIDU_BASE_URL);
+			url.append("&wd=");
 			url.append(seachContent);
 			break;
 		default:

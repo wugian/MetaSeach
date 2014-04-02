@@ -1,8 +1,10 @@
 package com.meta.util;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 
 /**
@@ -12,17 +14,16 @@ import java.io.UnsupportedEncodingException;
  * 
  */
 public class TypeConversion {
-	public static String inputStream2String(InputStream in) {
-		StringBuffer out = new StringBuffer();
-		byte[] b = new byte[4 * 1024];
-		try {
-			for (int n; (n = in.read(b)) != -1;) {
-				out.append(new String(b, 0, n));
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
+	public static String inputStream2String(InputStream in_st, String charset)
+			throws IOException {
+		BufferedReader buff = new BufferedReader(new InputStreamReader(in_st,
+				charset));
+		StringBuffer res = new StringBuffer();
+		String line = "";
+		while ((line = buff.readLine()) != null) {
+			res.append(line);
 		}
-		return out.toString();
+		return res.toString();
 	}
 
 	public static InputStream string2Stream(String string) {

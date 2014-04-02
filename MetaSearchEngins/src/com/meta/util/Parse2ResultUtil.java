@@ -1,4 +1,4 @@
-package com.meta.business.factory;
+package com.meta.util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,28 +6,20 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.meta.model.Result;
-import com.meta.util.LOG;
 
-/**
- * 解析GOOGLE搜索结果类，继承BASEPARSER(IPAESER),重写PARSEPAGE();
- * 
- * @author tezuka-pc
- * 
- */
-public class GoogleParser extends BaseParser {
-	// 摘要正则式
-	String sumaryReg = "<span class=\"st\">.*?</span>";
+public class Parse2ResultUtil {
 
-	// URL正则式包括标题
-	String reg = "<h3 class=\"r\">.*?</h3>";
-	
-	
-	String urlRex = "<a[^>]*href=(\"([^\"]*)\"|\'([^\']*)\'|([^\\s>]*))[^>]*>(.*?)</a>";
-	
-	@Override
-	public List<Result> parsePage(String searchCotent) {
+	/**
+	 * 将pageContext(特指搜索引擎结果页面的内容)转化成Result列表返回
+	 * result详见 com.meta.model.Result
+	 * @param pageContent 页面结果内容
+	 * @param titleRegex  结果的页面标题正则式
+	 * @param urlRegex	  结果的URL正则式
+	 * @param sumaryRegex 结果的摘要正则式
+	 * @return
+	 */
+	public List<Result> parsePage(String pageContent,String titleRegex,String urlRegex,String sumaryRegex ) {
 		List<Result> results = new ArrayList<Result>();
-		String pageContent = super.getSearchContent(searchCotent, GOOGLE);
 		// 摘要正则式
 		String sumaryReg = "<span class=\"st\">.*?</span>";
 		Pattern pp = Pattern.compile(sumaryReg, Pattern.CASE_INSENSITIVE);
