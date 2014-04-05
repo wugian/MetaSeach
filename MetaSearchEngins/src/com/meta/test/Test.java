@@ -1,6 +1,5 @@
 package com.meta.test;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
@@ -16,11 +15,8 @@ import com.gargoylesoftware.htmlunit.NicelyResynchronizingAjaxController;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.meta.business.factory.BaiduFactory;
-import com.meta.business.factory.GoogleFactory;
-import com.meta.business.factory.GoogleParser;
 import com.meta.business.intertace.IParser;
-import com.meta.netutil.NetUtil;
-import com.meta.util.IOUtil;
+import com.meta.netutil.HttpUtil;
 
 public class Test {
 
@@ -42,7 +38,7 @@ public class Test {
 
 	void testGoogle() {
 		String testUrl = "https://www.google.com.hk/search?newwindow=1&safe=strict&espv=210&es_sm=93&q=java+++%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F&oq=java+++%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F&gs_l=serp.12..0i12i2l10.22208.22208.0.24730.1.1.0.0.0.0.143.143.0j1.1.0....0...1c.1.38.serp..0.1.136.P21GGt3DHms";
-		NetUtil netUtil = new NetUtil();
+		HttpUtil netUtil = new HttpUtil();
 		String content = netUtil.getPageContentT(testUrl);
 		System.out.println("content:" + content);
 		String reg = "<h3 class=\"r\">.*?</h3>";

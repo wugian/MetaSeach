@@ -1,158 +1,154 @@
 package com.meta.netutil;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
+import org.apache.commons.httpclient.Header;
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.HttpMethod;
+import org.apache.commons.httpclient.methods.GetMethod;
+
+import com.meta.util.LOG;
+import com.meta.util.TypeConversion;
+
+/**
+ * 
+ * 
+ * @author tezuka-pc
+ * 
+ */
 public class HttpUtil {
+	/**
+	 * 得到页面内容
+	 * 
+	 * @param url
+	 * @return
+	 */
+	public String getPageContent(String url) {
+		String result = null;
 
-	private static String ENCODE = "GBK";
-	private static String TITLE_REGEX = "<title>.*?</title>";
+		HttpClient client = new HttpClient();
+		LOG.debug("request url:\t" + url);
+		HttpMethod method = new GetMethod(url);
 
-	public static String getCotentFromUrl(String urlStr) {
+		try {
+			client.executeMethod(method);
+			LOG.debug("status line:\t" + method.getStatusLine().toString());
+			Header[] headers = method.getRequestHeaders();
+			for (int i = 0; i < headers.length; i++) {
+				LOG.debug("header" + (i + 1) + ":\t" + headers[i].getName()
+						+ ":" + headers[i].getValue());
+			}
+
+			InputStream s = method.getResponseBodyAsStream();
+			BufferedReader in = new BufferedReader(new InputStreamReader(s,
+					"utf-8"));
+			String temp = "";
+			while ((temp = in.readLine()) != null) {
+				result += (temp);
+				System.out.println("lovely: " + temp);
+			}
+			in.close();
+			method.releaseConnection();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	/**
+	 * 得到页面内容
+	 * 
+	 * @param url
+	 * @return
+	 */
+	public String getPageContentT(String urlStr) {
 		URL url = null;
-		String temp;
+		String result = null;
+		LOG.debug("request url:\t" + urlStr);
 		StringBuffer sb = new StringBuffer();
 		try {
 			url = new URL(urlStr);
-
-			/** �޸� ****************/
 			URLConnection conn = url.openConnection();
+			conn.setDoOutput(true);
 			conn.setRequestProperty("User-Agent",
-					"Mozilla/4.0 (compatible; MSIE 5.0; Windows NT; DigExt)");
-			BufferedReader in = new BufferedReader(new InputStreamReader(
-					conn.getInputStream(), "utf-8")); 
-			// HttpURLConnection connection = (HttpURLConnection) url.
-			// openConnection();
-			//
-			//
-			// connection.setRequestProperty("User-Agent",
-			// "Mozilla/4.0 (compatible; MSIE 5.0; Windows 7; DigExt)");
-			//
-			// BufferedReader in = new BufferedReader(new InputStreamReader(
-			// url.openStream(), ENCODE));// ��ȡ��ҳȫ������
-
-			while ((temp = in.readLine()) != null) {
-				sb.append(temp);
-			}
-			in.close();
+					"Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1)");
+			InputStream input = conn.getInputStream();
+			result = TypeConversion.inputStream2String(input, "utf-8");
+			// saveHtml("a", test); for debug
+			sb.append(result);
 		} catch (final MalformedURLException me) {
-			System.out.println("�������URL��ʽ������!");
+			System.out.println("the url that you input is wrong");
 			me.getMessage();
 		} catch (final IOException e) {
 			e.printStackTrace();
 		}
-		System.out.println(sb.toString());
-		return sb.toString();
-	}
-
-	public static String getTitle(String s) {
-		String regex;
-		String title = "";
-		List<String> list = new ArrayList<String>();
-		regex = "<title>.*?</title>";
-		Pattern pa = Pattern.compile(regex, Pattern.CANON_EQ);
-		Matcher ma = pa.matcher(s);
-		while (ma.find()) {
-			list.add(ma.group());
-		}
-		for (int i = 0; i < list.size(); i++) {
-			title = title + list.get(i);
-		}
-		return outTag(title);
+		return result;
 	}
 
 	/**
+	 * save the html page for debug
 	 * 
-	 * @param s
-	 * @return �������
+	 * @param filepath
+	 * @param str
 	 */
-	public static List<String> getLink(String s) {
-		String regex;
-		List<String> list = new ArrayList<String>();
-		regex = "<a[^>]*href=(\"([^\"]*)\"|\'([^\']*)\'|([^\\s>]*))[^>]*>(.*?)</a>";
-		Pattern pa = Pattern.compile(regex, Pattern.DOTALL);
-		Matcher ma = pa.matcher(s);
-		while (ma.find()) {
-			list.add(ma.group());
+	public static void saveHtml(String filepath, String str) {
+
+		try {
+			/*
+			 * @SuppressWarnings("resource") FileWriter fw = new
+			 * FileWriter(filepath); fw.write(str); fw.flush();
+			 */
+			File file = new File("D:/a.html");
+			if (!file.exists()) {
+				try {
+					file.createNewFile();
+					System.out.println("create file");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					System.out.println("exception when create file");
+					e.printStackTrace();
+				}
+			}
+			OutputStreamWriter outs = new OutputStreamWriter(
+					new FileOutputStream("D:/a.html", true), "utf-8");
+			outs.write(str);
+			outs.close();
+		} catch (IOException e) {
+			System.out.println("Error at save html...");
+			e.printStackTrace();
 		}
-		return list;
 	}
 
 	/**
+	 * 得到中转后真正的URL主要针对 baidu yahoo...
 	 * 
-	 * @param s
-	 * @return ��ýű�����
+	 * @param url
+	 * @return
 	 */
-	public List<String> getScript(String s) {
-		String regex;
-		List<String> list = new ArrayList<String>();
-		regex = "<SCRIPT.*?</SCRIPT>";
-		Pattern pa = Pattern.compile(regex, Pattern.DOTALL);
-		Matcher ma = pa.matcher(s);
-		while (ma.find()) {
-			list.add(ma.group());
+	public String getRealUrl(String url) {
+		HttpURLConnection conn = null;
+		try {
+			conn = (HttpURLConnection) new URL(url).openConnection();
+			conn.setConnectTimeout(5 * 1000);
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		return list;
-	}
-
-	public List<String> getNews(String s) {
-		String regex = "<a.*?</a>";
-		Pattern pa = Pattern.compile(regex, Pattern.DOTALL);
-		Matcher ma = pa.matcher(s);
-		List<String> list = new ArrayList<String>();
-		while (ma.find()) {
-			list.add(ma.group());
-		}
-		return list;
-	}
-
-	/**
-	 * 
-	 * @param s
-	 * @return ���CSS
-	 */
-	public List<String> getCSS(String s) {
-		String regex;
-		List<String> list = new ArrayList<String>();
-		regex = "<style.*?</style>";
-		Pattern pa = Pattern.compile(regex, Pattern.DOTALL);
-		Matcher ma = pa.matcher(s);
-		while (ma.find()) {
-			list.add(ma.group());
-		}
-		return list;
-	}
-
-	/**
-	 * 
-	 * @param s
-	 * @return ȥ�����
-	 */
-	public static String outTag(final String s) {
-		return s.replaceAll("<.*?>", "");
-	}
-
-	public static void main(String[] args) {
-		// Test t = new Test();
-		// String content = t.getHtmlContent("http://www.taobao.com");
-		// //content = content.replaceAll("(<br>)+?", "\n");// ת������
-		// //content = content.replaceAll("<p><em>.*?</em></p>", "");// ȥͼƬע��
-		// System.out.println(content);
-		// System.out.println(t.getTitle(content));
-		// List<String> a = t.getNews(content);
-		// List<String> news = new ArrayList<String>();
-		// for (String s : a) {
-		// news.add(s.replaceAll("<.*?>", ""));
-		// }
-		// System.out.println(news);
-		// //���� ��ȡjs��css�Ȳ���ʡ��
+		(conn).setInstanceFollowRedirects(false);
+		url = (conn.getHeaderField("Location"));
+		return url;
 	}
 }

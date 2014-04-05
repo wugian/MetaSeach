@@ -1,9 +1,20 @@
 package com.meta.model;
 
+import com.meta.util.MD5Util;
+
 public class Result {
 	private String url;
 	private String title;
 	private String sumary;
+	private String md5;
+
+	public String getMd5() {
+		return md5;
+	}
+
+	public void setMd5(String md5) {
+		this.md5 = md5;
+	}
 
 	public String getUrl() {
 		return url;
@@ -11,6 +22,8 @@ public class Result {
 
 	public void setUrl(String url) {
 		this.url = url;
+		// 在设置URL的时候设置MD5
+		setMd5(MD5Util.getMD5String(url).toLowerCase());
 	}
 
 	public String getTitle() {
@@ -29,10 +42,16 @@ public class Result {
 		this.sumary = sumary;
 	}
 
-	@Override
-	public String toString() {
-		return "Result /n  url=" + url + "  /n title=" + title + " /n sumary="
-				+ sumary;
+	private static int count;
+	static {
+		count = 0;
 	}
 
+	@Override
+	public String toString() {
+		count++;
+		return "Result " + count + ":\n title =" + title + "\n url = " + url
+				+ "\n sumary=" + sumary + "\n md5 = " + md5;
+
+	}
 }

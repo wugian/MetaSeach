@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.meta.business.intertace.IParser;
 import com.meta.model.Result;
-import com.meta.netutil.NetUtil;
+import com.meta.netutil.HttpUtil;
 
 public class BaseParser implements IParser {
 	public static final int GOOGLE = 0x00;
@@ -23,10 +23,10 @@ public class BaseParser implements IParser {
 	// "oq=java+&" +
 	// "gs_l=serp.3.0.35i39l2j0l8.986529.988072.0.989910.2.2.0.0.0.0.281.419.0j1j1.2.0....0...1c..38.serp..0.2.414.xcR79jmSmlE";
 
-	NetUtil netUtil;
+	HttpUtil netUtil;
 
 	public BaseParser() {
-		netUtil = new NetUtil();
+		netUtil = new HttpUtil();
 	}
 
 	/**
