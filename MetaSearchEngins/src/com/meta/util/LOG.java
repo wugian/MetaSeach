@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.LinkedList;
 /**
  * 调试类，在程序正式发布时利用DEBUG关闭
  * @author tezuka-pc
@@ -23,6 +24,8 @@ public class LOG {
 	public static void error(String error) {
 		if (DEBUG) {
 			System.err.println("=====>" + error);
+			LinkedList<String> ll = new LinkedList<String>();
+			ll.contains("lovely");
 		}
 	}
 

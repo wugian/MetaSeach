@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -14,8 +15,11 @@ import com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException;
 import com.gargoylesoftware.htmlunit.NicelyResynchronizingAjaxController;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import com.meta.business.DuplicateRemoval;
 import com.meta.business.factory.BaiduFactory;
+import com.meta.business.factory.GoogleFactory;
 import com.meta.business.intertace.IParser;
+import com.meta.model.Result;
 import com.meta.netutil.HttpUtil;
 
 public class Test {
@@ -25,15 +29,18 @@ public class Test {
 	 * @throws UnsupportedEncodingException
 	 */
 	public static void main(String[] args) throws UnsupportedEncodingException {
-		 IParser googleParser = new BaiduFactory().produce();
-		
-		 googleParser.parsePage(URLEncoder.encode("java 设计模式", "utf-8"));
+		IParser baiduParser = new BaiduFactory().produce();
+		ArrayList<Result> br = (ArrayList<Result>) baiduParser
+				.parsePage(URLEncoder.encode("java 设计模式", "utf-8"));
 
-//		NetUtil net = new NetUtil();
-//		String testStr = "http://www.baidu.com/s?ie=utf-8&newi=1&mod=0&isid=A4918682B8D19450&pstg=0&wd=java%20%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F&ie=utf-8&tn=baiduhome_pg&rsv_spt=1&issp=1&rsv_bp=0&rsv_sug3=11&rsv_sug4=835&rsv_sug1=14&rsv_sug2=0&inputT=8&rsv_sug=1&"
-//				+ "rsv_sid=5611_1467_5224_5287_5722_5848_4261_5830_4759_5857_5825&"
-//				+ "f4s=1&csor=9&_cr1=22427";
-//		String s = net.getPageContentT(testStr);
+		IParser googleParser = new GoogleFactory().produce();
+		ArrayList<Result> gr = (ArrayList<Result>) googleParser
+				.parsePage(URLEncoder.encode("java 设计模式", "utf-8"));
+
+		DuplicateRemoval dr = new DuplicateRemoval();
+		dr.insert(gr);
+		dr.insert(br);
+		dr.show();
 	}
 
 	void testGoogle() {
