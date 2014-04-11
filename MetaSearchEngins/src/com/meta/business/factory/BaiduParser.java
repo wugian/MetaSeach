@@ -64,8 +64,8 @@ public class BaiduParser extends BaseParser {
 		for (int j = 0; j < results.size(); j++) {
 			LOG.debug(results.get(j).toString());
 		}
-		System.out.println(HexUtil.compare(results.get(0).getMd5(), results
-				.get(1).getMd5()));
+	//	System.out.println(HexUtil.compare(results.get(0).getMd5(), results
+	//			.get(1).getMd5()));
 		return results;
 	}
 

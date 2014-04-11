@@ -18,14 +18,14 @@ public class HexUtil {
 	 * @return
 	 */
 	public static boolean compare(String hex1, String hex2) {
-		for (int i = 0; i < hex1.length(); i += 2) {
+	//	for (int i = 0; i < hex1.length(); i += 2) {
 			if (Integer.parseInt(hex1/*.substring(0 + i, 2 + i), 16*/) > Integer
 					.parseInt(hex2/*.substring(0 + i, 2 + i), 16*/))
 				return true;
 			else if (Integer.parseInt(hex1/*.substring(0 + i, 2 + i), 16*/) < Integer
 					.parseInt(hex2/*.substring(0 + i, 2 + i), 16*/))
 				return false;
-		}
+	//	}
 		return false;
 	}
 }

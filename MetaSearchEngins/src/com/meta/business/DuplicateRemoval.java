@@ -20,7 +20,7 @@ public class DuplicateRemoval {
 
 	/**
 	 * 将结果插入总的结果列表 TODO这里的去重是否要重新优化,后期在修改的时候去看哪种时间更加短 利用
-	 * tags 换成一个数组 利用中序插值算法
+	 * tags 换成一个数组 利用中序插值算法  ARRAYUTIL里面的东西要修改成泛型后才可以用全HEX比较
 	 * @param all
 	 */
 	public void insert(List<Result> all) {
