@@ -15,12 +15,24 @@ public class Search {
 		IParser baiduParser = new BaiduFactory().produce();
 		ArrayList<Result> br = null;
 
-		br = (ArrayList<Result>) baiduParser.parsePage(search);
+		try {
+			br = (ArrayList<Result>) baiduParser.parsePage(URLEncoder.encode(
+					search, "utf-8"));
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		IParser googleParser = new GoogleFactory().produce();
 		ArrayList<Result> gr = null;
 
-		gr = (ArrayList<Result>) googleParser.parsePage(search);
+		try {
+			gr = (ArrayList<Result>) googleParser.parsePage(URLEncoder.encode(
+					search, "utf-8"));
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		DuplicateRemoval dr = new DuplicateRemoval();
 		dr.insert(gr);

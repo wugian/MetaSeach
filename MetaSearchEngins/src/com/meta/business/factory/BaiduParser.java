@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 import com.meta.model.Result;
 import com.meta.netutil.HttpUtil;
 import com.meta.util.HexUtil;
+import com.meta.util.HtmlUtil;
 import com.meta.util.LOG;
 
 public class BaiduParser extends BaseParser {
@@ -57,15 +58,16 @@ public class BaiduParser extends BaseParser {
 		int i = 0;
 		while (sumaryMatcher.find()) {
 			String content = sumaryMatcher.group(0);
-			results.get(i).setSumary(content.replaceAll("<.*?>", ""));
+			results.get(i).setSumary(
+					HtmlUtil.getTheReplaced(content.replaceAll("<.*?>", "")));
 			i++;
 		}
 		// for test
 		for (int j = 0; j < results.size(); j++) {
 			LOG.debug(results.get(j).toString());
 		}
-	//	System.out.println(HexUtil.compare(results.get(0).getMd5(), results
-	//			.get(1).getMd5()));
+		// System.out.println(HexUtil.compare(results.get(0).getMd5(), results
+		// .get(1).getMd5()));
 		return results;
 	}
 
@@ -76,6 +78,9 @@ public class BaiduParser extends BaseParser {
 	 * @return
 	 */
 	private static String getBaiduUrl(String content, String urlRegex) {
+		System.out.println("******************************");
+		System.out.println(content);
+		System.out.println("******************************");
 		String url = "";
 		Pattern pa = Pattern.compile(urlRegex, Pattern.CASE_INSENSITIVE
 				| Pattern.DOTALL);

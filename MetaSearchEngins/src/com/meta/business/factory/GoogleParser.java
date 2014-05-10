@@ -6,6 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.meta.model.Result;
+import com.meta.util.HtmlUtil;
 import com.meta.util.LOG;
 
 /**
@@ -20,10 +21,9 @@ public class GoogleParser extends BaseParser {
 
 	// URL正则式包括标题
 	String reg = "<h3 class=\"r\">.*?</h3>";
-	
-	
+
 	String urlRex = "<a[^>]*href=(\"([^\"]*)\"|\'([^\']*)\'|([^\\s>]*))[^>]*>(.*?)</a>";
-	
+
 	@Override
 	public List<Result> parsePage(String searchCotent) {
 		List<Result> results = new ArrayList<Result>();
@@ -49,7 +49,8 @@ public class GoogleParser extends BaseParser {
 		int i = 0;
 		while (mm.find()) {
 			String content = mm.group(0);
-			results.get(i).setSumary(content.replaceAll("<.*?>", ""));
+			results.get(i).setSumary(
+					HtmlUtil.getTheReplaced(content.replaceAll("<.*?>", "")));
 			i++;
 		}
 

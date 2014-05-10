@@ -40,7 +40,10 @@ public class MD5Util {
 	 * @return
 	 */
 	public static String getMD5String(String s) {
-		return getMD5String(s.getBytes());
+		if (s != null)
+			return getMD5String(s.getBytes());
+		else
+			return getMD5String(new String("aaa").getBytes());
 	}
 
 	/**
