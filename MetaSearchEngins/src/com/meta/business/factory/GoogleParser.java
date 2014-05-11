@@ -25,9 +25,10 @@ public class GoogleParser extends BaseParser {
 	String urlRex = "<a[^>]*href=(\"([^\"]*)\"|\'([^\']*)\'|([^\\s>]*))[^>]*>(.*?)</a>";
 
 	@Override
-	public List<Result> parsePage(String searchCotent) {
+	public List<Result> parsePage(String searchContent) {
+		HtmlUtil htmlUtil = new HtmlUtil(searchContent);
 		List<Result> results = new ArrayList<Result>();
-		String pageContent = super.getSearchContent(searchCotent, GOOGLE);
+		String pageContent = super.getSearchContent(searchContent, GOOGLE);
 		// 摘要正则式
 		String sumaryReg = "<span class=\"st\">.*?</span>";
 		Pattern pp = Pattern.compile(sumaryReg, Pattern.CASE_INSENSITIVE);
@@ -41,7 +42,8 @@ public class GoogleParser extends BaseParser {
 		while (m.find()) {
 			Result result = new Result();
 			String content = m.group(0);
-			result.setTitle(content.replaceAll("<.*?>", ""));
+			result.setTitle(htmlUtil.getTheReplaced(content.replaceAll("<.*?>",
+					"")));
 			result.setUrl(getGoogleUrl(content));
 			results.add(result);
 		}// end of while
@@ -50,7 +52,7 @@ public class GoogleParser extends BaseParser {
 		while (mm.find()) {
 			String content = mm.group(0);
 			results.get(i).setSumary(
-					HtmlUtil.getTheReplaced(content.replaceAll("<.*?>", "")));
+					htmlUtil.getTheReplaced(content.replaceAll("<.*?>", "")));
 			i++;
 		}
 

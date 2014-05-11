@@ -1,6 +1,7 @@
 package com.meta.business.factory;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 
 import com.meta.business.intertace.IParser;
@@ -11,8 +12,6 @@ public class BaseParser implements IParser {
 	public static final int GOOGLE = 0x00;
 	public static final int YAHOO = 0x01;
 	public static final int BAIDU = 0x02;
-
-	
 
 	private static final String GOOGLE_BASE_URL = "https://www.google.com.hk/search?";
 	// 在百度搜索中,浏览器URL有点问题,根URL后面应该是S?而不是#
@@ -74,15 +73,19 @@ public class BaseParser implements IParser {
 		case GOOGLE:
 			url.append(GOOGLE_BASE_URL);
 			url.append("&q=");
-			url.append(seachContent);
 			break;
 		case BAIDU:
 			url.append(BAIDU_BASE_URL);
 			url.append("&wd=");
-			url.append(seachContent);
 			break;
 		default:
 			break;
+		}
+		try {
+			url.append(URLEncoder.encode(seachContent, "utf-8"));
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return url.toString();
 	}

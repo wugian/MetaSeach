@@ -47,6 +47,7 @@ public class DuplicateRemoval {
 		LOG.debug("重复条数:" + repeatCount);
 		for (Result r : results) {
 			LOG.debug(r.toString());
+			LOG.error("***************************************");
 		}
 	}
 }

@@ -1,24 +1,32 @@
 package com.meta.test;
 
 import java.io.IOException;
+import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.htmlparser.beans.StringBean;
 import org.htmlparser.util.ParserException;
-
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
+import org.lionsoul.jcseg.ASegment;
+import org.lionsoul.jcseg.core.ADictionary;
+import org.lionsoul.jcseg.core.DictionaryFactory;
+import org.lionsoul.jcseg.core.IWord;
+import org.lionsoul.jcseg.core.JcsegException;
+import org.lionsoul.jcseg.core.JcsegTaskConfig;
+import org.lionsoul.jcseg.core.SegmentFactory;
 
 import com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException;
 import com.gargoylesoftware.htmlunit.NicelyResynchronizingAjaxController;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import com.meta.business.factory.BaiduFactory;
+import com.meta.business.intertace.IParser;
+import com.meta.model.Result;
 import com.meta.netutil.HttpUtil;
 import com.meta.util.HtmlUtil;
-import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 
 public class Test {
 
@@ -28,10 +36,18 @@ public class Test {
 	 */
 	public static void main(String[] args) throws UnsupportedEncodingException {
 
-		String s = "this is Java i love this java";
-		System.out.println(s);
-		String result = HtmlUtil.getResult(s);
-		System.out.println(result);
+		IParser baiduParser = new BaiduFactory().produce();
+		ArrayList<Result> br = null;
+		br = (ArrayList<Result>) baiduParser.parsePage("java 设计模式");
+
+		// String s = "this is Java i love this java";
+		// System.out.println(s);
+		// /String result = HtmlUtil.getResult(s);
+		// System.out.println(result);
+		// String cnTest = "我爱中国一个人的生活，i love you";
+		//
+		// String result = HtmlUtil.getTheReplaced(cnTest, "生活中国一个");
+		// System.out.println(result);
 		// String testStr =
 		// "3fXOhYbi_v5KhB1OSL_fPAhd2D84iTzLNInmYI41oEXd7vNvZQ6tBwKCmHbO4Qnzf842tXKm6xXmQzecZ-6pVK";
 		// byte[] asBytes = Base64

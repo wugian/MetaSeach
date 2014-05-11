@@ -1,7 +1,5 @@
 package com.meta.business;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,26 +12,10 @@ public class Search {
 	public List<Result> getResult(String search) {
 		IParser baiduParser = new BaiduFactory().produce();
 		ArrayList<Result> br = null;
-
-		try {
-			br = (ArrayList<Result>) baiduParser.parsePage(URLEncoder.encode(
-					search, "utf-8"));
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
+		br = (ArrayList<Result>) baiduParser.parsePage(search);
 		IParser googleParser = new GoogleFactory().produce();
 		ArrayList<Result> gr = null;
-
-		try {
-			gr = (ArrayList<Result>) googleParser.parsePage(URLEncoder.encode(
-					search, "utf-8"));
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
+		gr = (ArrayList<Result>) googleParser.parsePage(search);
 		DuplicateRemoval dr = new DuplicateRemoval();
 		dr.insert(gr);
 		dr.insert(br);
