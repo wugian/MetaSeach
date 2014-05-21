@@ -47,7 +47,7 @@ public class BaseParser implements IParser {
 	 */
 	public String getSearchContent(String seachContent, int type) {
 		String url = this.searchUrlConstruct(seachContent, type);
-		return netUtil.getPageContentT(url);
+		return netUtil.getPageContent(url);
 	}
 
 	/**

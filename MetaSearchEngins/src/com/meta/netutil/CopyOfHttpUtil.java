@@ -26,7 +26,7 @@ import com.meta.util.TypeConversion;
  * @author tezuka-pc
  * 
  */
-public class HttpUtil {
+public class CopyOfHttpUtil {
 	/**
 	 * 得到页面内容
 	 * 
@@ -38,40 +38,23 @@ public class HttpUtil {
 		String result = null;
 		LOG.debug("request url:\t" + urlStr);
 		StringBuffer sb = new StringBuffer();
-		BufferedReader in = null;
 		try {
 			url = new URL(urlStr);
 			URLConnection conn = url.openConnection();
-			// 设置通用的请求属性
 			conn.setDoOutput(true);
 			conn.setRequestProperty("User-Agent",
 					"Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1)");
-			// 定义BufferedReader输入流来读取URL的响应
-			in = new BufferedReader(
-					new InputStreamReader(conn.getInputStream()));
-			String line;
-			while ((line = in.readLine()) != null) {
-				sb.append("/n").append(line);
-			}
-			// InputStream input = conn.getInputStream();
-			// result = TypeConversion.inputStream2String(input, "utf-8");
-			// // saveHtml("a", test); for debug
-			// sb.append(result);
+			InputStream input = conn.getInputStream();
+			result = TypeConversion.inputStream2String(input, "utf-8");
+			// saveHtml("a", test); for debug
+			sb.append(result);
 		} catch (final MalformedURLException me) {
 			System.out.println("the url that you input is wrong");
 			me.getMessage();
 		} catch (final IOException e) {
 			e.printStackTrace();
-		} finally {
-			try {
-				if (in != null) {
-					in.close();
-				}
-			} catch (IOException ex) {
-				ex.printStackTrace();
-			}
 		}
-		return sb.toString();
+		return result;
 	}
 
 	/**

@@ -23,6 +23,8 @@ import com.gargoylesoftware.htmlunit.NicelyResynchronizingAjaxController;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.meta.business.factory.BaiduFactory;
+import com.meta.business.factory.CopyOfBaiduFactory;
+import com.meta.business.factory.CopyOfBaiduParser;
 import com.meta.business.intertace.IParser;
 import com.meta.model.Result;
 import com.meta.netutil.HttpUtil;
@@ -36,7 +38,7 @@ public class Test {
 	 */
 	public static void main(String[] args) throws UnsupportedEncodingException {
 
-		IParser baiduParser = new BaiduFactory().produce();
+		IParser baiduParser = new CopyOfBaiduFactory().produce();
 		ArrayList<Result> br = null;
 		br = (ArrayList<Result>) baiduParser.parsePage("java 设计模式");
 
@@ -87,7 +89,7 @@ public class Test {
 	void testGoogle() {
 		String testUrl = "https://www.google.com.hk/search?newwindow=1&safe=strict&espv=210&es_sm=93&q=java+++%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F&oq=java+++%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F&gs_l=serp.12..0i12i2l10.22208.22208.0.24730.1.1.0.0.0.0.143.143.0j1.1.0....0...1c.1.38.serp..0.1.136.P21GGt3DHms";
 		HttpUtil netUtil = new HttpUtil();
-		String content = netUtil.getPageContentT(testUrl);
+		String content = netUtil.getPageContent(testUrl);
 		System.out.println("content:" + content);
 		String reg = "<h3 class=\"r\">.*?</h3>";
 		Pattern p = Pattern.compile(reg, Pattern.CASE_INSENSITIVE
