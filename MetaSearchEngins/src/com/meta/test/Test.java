@@ -4,10 +4,14 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.util.NetUtils;
 import org.htmlparser.beans.StringBean;
 import org.htmlparser.util.ParserException;
 import org.lionsoul.jcseg.ASegment;
@@ -38,9 +42,16 @@ public class Test {
 	 */
 	public static void main(String[] args) throws UnsupportedEncodingException {
 
-		IParser baiduParser = new CopyOfBaiduFactory().produce();
-		ArrayList<Result> br = null;
-		br = (ArrayList<Result>) baiduParser.parsePage("java 设计模式");
+		// http://www.baidu.com/s?ie=utf-8&word=%E5%A4%A9%E7%A9%BA
+		// String testSb = "http://www.baidu.com/s?ie=utf-8&wd=";
+		// String searchContent = URLEncoder.encode("天空");
+		// HttpUtil hu = new HttpUtil();
+		//
+		// hu.getPageContent(testSb + searchContent);
+		System.out.println(URLDecoder.decode("%E5%A4%A9%E7%A9%BA"));
+		// IParser baiduParser = new CopyOfBaiduFactory().produce();
+		// ArrayList<Result> br = null;
+		// br = (ArrayList<Result>) baiduParser.parsePage("java 设计模式");
 
 		// String s = "this is Java i love this java";
 		// System.out.println(s);

@@ -1,7 +1,7 @@
 <%@page import="com.sun.org.apache.xalan.internal.xsltc.compiler.sym"%>
 <%@ page language="java"
 	import="java.util.*,com.meta.business.*,com.meta.model.Result"
-	pageEncoding="gbk"%>
+	pageEncoding="utf-8"%>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
@@ -14,10 +14,11 @@
 		searchContent = new String(searchContent.getBytes("8859_1"),
 				"GBK");
 	}
+	System.out.println("lovely====>out:" + searchContent);
 	List<Result> all = search.getResult(searchContent);
+	//List<Result> all = new ArrayList<Result>();
 %>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
 <base href="<%=basePath%>">
@@ -37,10 +38,29 @@
 
 <body align="center|left" marginwidth="100dp" marginheight="50dp"
 	style="width:60%">
-
-	<font color="red">your search content is</font>
-	:<%=searchContent%>
+	<div style="width:760px;margin:0px auto">
+		<a href="index.jsp"><img border="0" src="log.jpg"
+			alt="metacrawler" width="195" height="60"
+			style="float:left;width:195px; height:60px;" /> </a>
+	</div>
 	<p></p>
+	<div style="width:760px;margin:0px auto">
+		<form name="f" id="form1" action="result.jsp">
+			<input type="text" name="keyword" id="keyword1" maxlength="100"
+				values=<%=searchContent%> style="width:474px;" autocomplete="off">
+			<span class="btn_wr"> <input type="submit" value="搜 索"
+				id="su1" class="btn"> </span></br>
+			<div align=center>
+				<label><input name="Fruit" type="checkbox" value="" />Google
+				</label> <label><input name="Fruit" type="checkbox" value="" />百度 </label>
+				<label><input name="Fruit" type="checkbox" value="" /><font
+					color="gray" clickable=false>yahoo </font> </label> <label><input
+					name="Fruit" type="checkbox" value="" clickable=false /><font
+					color="gray">360</font> </label>
+			</div>
+		</form>
+
+	</div>
 	<%
 		for (int i = 0; i < all.size(); i++) {
 	%>

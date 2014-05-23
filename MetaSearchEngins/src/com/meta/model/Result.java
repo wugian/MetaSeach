@@ -17,7 +17,7 @@ public class Result {
     this.md5 = md5;
   }
   
-  public doubl getScore() {
+  public double getScore() {
     return score;
   }
 

@@ -47,16 +47,13 @@ public class HttpUtil {
 			conn.setRequestProperty("User-Agent",
 					"Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1)");
 			// 定义BufferedReader输入流来读取URL的响应
-			in = new BufferedReader(
-					new InputStreamReader(conn.getInputStream()));
+			in = new BufferedReader(new InputStreamReader(
+					conn.getInputStream(), "utf-8"));
 			String line;
 			while ((line = in.readLine()) != null) {
-				sb.append("/n").append(line);
+				sb.append(line);
+				System.out.println(line);
 			}
-			// InputStream input = conn.getInputStream();
-			// result = TypeConversion.inputStream2String(input, "utf-8");
-			// // saveHtml("a", test); for debug
-			// sb.append(result);
 		} catch (final MalformedURLException me) {
 			System.out.println("the url that you input is wrong");
 			me.getMessage();

@@ -6,31 +6,34 @@
 			+ path + "/";
 %>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
 <title>search in result</title>
 </head>
 
-<body>
-
-<a href="index.jsp"><img border="0" src="log.jpg" alt="metacrawler" width="195" height="60" style="float:left;width:195px; height:60px;" /></a> 
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-	<div align="center">
+<body align="center">
+	<div style="width:760px;margin:90px auto">
+		<a href="index.jsp"><img border="0" src="log.jpg"
+			alt="metacrawler" width="195" height="60"
+			style="float:left;width:195px; height:60px;" /> </a>
+	</div>
+	<p></p>
+	<div style="width:760px;margin:90px auto">
 		<form name="f" id="form1" action="result.jsp">
 			<input type="text" name="keyword" id="keyword1" maxlength="100"
-				style="width:474px;" autocomplete="off"> <span
-				class="btn_wr"> <input type="submit" value="搜 索" id="su1"
-				class="btn" onmousedown="this.className='btn btn_h'"
-				onmouseout="this.className='btn'"> </span>
+				style="width:474px;"> <span class="btn_wr"> <input
+				type="submit" value="搜 索" id="su1" class="btn"> </span></br>
+			<div align=center>
+				<label><input name="Fruit" type="checkbox" value="" />Google
+				</label> <label><input name="Fruit" type="checkbox" value="" />百度 </label>
+				<label><input name="Fruit" type="checkbox" value="" /><font
+					color="gray" clickable=false>yahoo </font> </label> <label><input
+					name="Fruit" type="checkbox" value="" clickable=false /><font
+					color="gray">360</font> </label>
+			</div>
 		</form>
-	</div>
 
+	</div>
 
 </body>
 </html>
