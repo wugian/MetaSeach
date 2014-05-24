@@ -29,6 +29,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.meta.business.factory.BaiduFactory;
 import com.meta.business.factory.CopyOfBaiduFactory;
 import com.meta.business.factory.CopyOfBaiduParser;
+import com.meta.business.factory.GoogleNewParser;
 import com.meta.business.intertace.IParser;
 import com.meta.model.Result;
 import com.meta.netutil.HttpUtil;
@@ -42,13 +43,15 @@ public class Test {
 	 */
 	public static void main(String[] args) throws UnsupportedEncodingException {
 
+		new GoogleNewParser().parsePage("java 设计模式");
+
 		// http://www.baidu.com/s?ie=utf-8&word=%E5%A4%A9%E7%A9%BA
 		// String testSb = "http://www.baidu.com/s?ie=utf-8&wd=";
 		// String searchContent = URLEncoder.encode("天空");
 		// HttpUtil hu = new HttpUtil();
 		//
 		// hu.getPageContent(testSb + searchContent);
-		System.out.println(URLDecoder.decode("%E5%A4%A9%E7%A9%BA"));
+		// System.out.println(URLDecoder.decode("%E5%A4%A9%E7%A9%BA"));
 		// IParser baiduParser = new CopyOfBaiduFactory().produce();
 		// ArrayList<Result> br = null;
 		// br = (ArrayList<Result>) baiduParser.parsePage("java 设计模式");

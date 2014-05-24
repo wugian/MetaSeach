@@ -37,7 +37,7 @@
 </head>
 
 <body align="center|left" marginwidth="100dp" marginheight="50dp"
-	style="width:60%">
+	style="width:40%">
 	<div style="width:760px;margin:0px auto">
 		<a href="index.jsp"><img border="0" src="log.jpg"
 			alt="metacrawler" width="195" height="60"
@@ -65,12 +65,15 @@
 		for (int i = 0; i < all.size(); i++) {
 	%>
 	<a href=<%=all.get(i).getUrl()%>><%=all.get(i).getTitle()%></a>
-	<p></p>
+	<br></br>
 	<%
 		out.println(all.get(i).getSumary());
 	%>
+	</br>
+	<a href=<%=all.get(i).getUrl()%>><%=all.get(i).getUrl()%></a>
 	</p>
-	<p></p>
+	 
+	<br></br>
 	<%
 		}
 	%>

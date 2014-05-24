@@ -24,7 +24,7 @@ public class Search {
 		DuplicateRemoval dr = new DuplicateRemoval();
 		dr.insert(gr);
 		// dr.insert(br);
-		dr.show();
+		//dr.show();
 		return dr.getResults();
 	}
 }

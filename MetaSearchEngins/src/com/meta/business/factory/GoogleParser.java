@@ -17,12 +17,12 @@ import com.meta.util.LOG;
  */
 public class GoogleParser extends BaseParser {
 	// 摘要正则式
-	String sumaryReg = "<span class=\"st\">.*?</span>";
+	String sumaryReg = "<span [^>]*class=\"st\"[^>]*>(<span[^>]*>(<span[^>]*>.*?</span>|.)*?</span>|.)*?</span>";// "<span class=\"st\">.*?</span>";
 
 	// URL正则式包括标题
 	String reg = "<h3 class=\"r\">.*?</h3>";
 
-	String urlRex = "<a[^>]*href=(\"([^\"]*)\"|\'([^\']*)\'|([^\\s>]*))[^>]*>(.*?)</a>";
+	static String urlRex1 = "<a[^>]*href=(\"([^\"]*)\"|\'([^\']*)\'|([^\\s>]*))[^>]*>(.*?)</a>";
 
 	@Override
 	public List<Result> parsePage(String searchContent) {
@@ -69,6 +69,33 @@ public class GoogleParser extends BaseParser {
 	 * @return
 	 */
 	private static String getGoogleUrl(String content) {
+		String url = "";
+		Pattern pa = Pattern.compile(urlRex1, Pattern.CASE_INSENSITIVE
+				| Pattern.DOTALL);
+		Matcher ma = pa.matcher(content);
+		if (ma.find()) {
+			url = ma.group();
+			// <a href="http://www.books.com.tw/products/0010509577"
+			String urlRex = "<a href=\".*?\"";
+			Pattern pCur = Pattern.compile(urlRex, Pattern.CASE_INSENSITIVE
+					| Pattern.DOTALL);
+			Matcher mCur = pa.matcher(content);
+			if (mCur.find()) {
+				int s = url.indexOf("\"");
+				int e = url.indexOf("\"", s + 1);
+				url = url.substring(s + 1, e);
+			}
+		}
+		return url;
+	}
+
+	/**
+	 * 得到URL
+	 * 
+	 * @param content
+	 * @return
+	 */
+	private static String getGoogleUrl1(String content) {
 		String url = "";
 		String urlRex = "<a[^>]*href=(\"([^\"]*)\"|\'([^\']*)\'|([^\\s>]*))[^>]*>(.*?)</a>";
 		Pattern pa = Pattern.compile(urlRex, Pattern.CASE_INSENSITIVE

@@ -13,12 +13,12 @@ public class BaseParser implements IParser {
 	public static final int YAHOO = 0x01;
 	public static final int BAIDU = 0x02;
 
-	//lr=lang_zh-CN只搜索简体中文网页 
+	// lr=lang_zh-CN只搜索简体中文网页
 	// lr=lang_zh-TW只搜索繁体中文网页
 	// lr=lang_zh-CN|lang_zh-TW搜索所有中文网页
-	//	lr=lang_en只搜索英文网页 
-	//ct 语言限制。0-所有语言，1-简体中文网页，2-繁体中文网页；其它不确定或者无效或。默认值为0.
-	private static final String GOOGLE_BASE_URL = "https://www.google.com.hk/search?ie=utf-8&lr=lang_zh-CN";
+	// lr=lang_en只搜索英文网页
+	// ct 语言限制。0-所有语言，1-简体中文网页，2-繁体中文网页；其它不确定或者无效或。默认值为0.ie=utf-8&lr=lang_zh-CN
+	private static final String GOOGLE_BASE_URL = "https://www.google.com.hk/search?num=30";
 	// 在百度搜索中,浏览器URL有点问题,根URL后面应该是S?而不是#
 	private static final String BAIDU_BASE_URL = "http://www.baidu.com/s?ie=utf-8";
 	// + "newwindow=1&" + "safe=strict&" + "espv=210&es_sm=93&" +

@@ -44,15 +44,16 @@ public class HttpUtil {
 			URLConnection conn = url.openConnection();
 			// 设置通用的请求属性
 			conn.setDoOutput(true);
-			conn.setRequestProperty("User-Agent",
-					"Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1)");
+			String userAgent = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/21.0.1180.89 Safari/537.1 LBBROWSER";
+			conn.setRequestProperty("User-Agent", userAgent);
+			// ("User-Agent","Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1)");
 			// 定义BufferedReader输入流来读取URL的响应
 			in = new BufferedReader(new InputStreamReader(
 					conn.getInputStream(), "utf-8"));
 			String line;
 			while ((line = in.readLine()) != null) {
 				sb.append(line);
-				System.out.println(line);
+				// System.out.println(line);
 			}
 		} catch (final MalformedURLException me) {
 			System.out.println("the url that you input is wrong");
