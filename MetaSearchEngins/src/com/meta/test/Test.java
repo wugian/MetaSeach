@@ -43,7 +43,8 @@ public class Test {
 	 */
 	public static void main(String[] args) throws UnsupportedEncodingException {
 
-		new GoogleNewParser().parsePage("java 设计模式");
+		// new GoogleNewParser().parsePage("java 设计模式");
+		new CopyOfBaiduParser().parsePage("java设计模式");
 
 		// http://www.baidu.com/s?ie=utf-8&word=%E5%A4%A9%E7%A9%BA
 		// String testSb = "http://www.baidu.com/s?ie=utf-8&wd=";

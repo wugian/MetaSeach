@@ -11,7 +11,7 @@
 <title>search in result</title>
 </head>
 
-<body align="center">
+<body align="center" color="#FFcacaca">
 	<div style="width:760px;margin:90px auto">
 		<a href="index.jsp"><img border="0" src="log.jpg"
 			alt="metacrawler" width="195" height="60"

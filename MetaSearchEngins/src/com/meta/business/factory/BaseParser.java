@@ -20,7 +20,7 @@ public class BaseParser implements IParser {
 	// ct 语言限制。0-所有语言，1-简体中文网页，2-繁体中文网页；其它不确定或者无效或。默认值为0.ie=utf-8&lr=lang_zh-CN
 	private static final String GOOGLE_BASE_URL = "https://www.google.com.hk/search?num=30";
 	// 在百度搜索中,浏览器URL有点问题,根URL后面应该是S?而不是#
-	private static final String BAIDU_BASE_URL = "http://www.baidu.com/s?ie=utf-8";
+	private static final String BAIDU_BASE_URL = "http://www.baidu.com/s?ie=utf-8&rn=30";
 	// + "newwindow=1&" + "safe=strict&" + "espv=210&es_sm=93&" +
 	// "q=java+%E8%8E%B7%E5%8F%96google%E6%90%9C%E7%B4%A2%E7%BB%93%E6%9E%9C&"
 	// +

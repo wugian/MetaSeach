@@ -5,17 +5,19 @@
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
-			+ request.getServerName() + ":" + request.getServerPort()
-			+ path + "/";
+	+ request.getServerName() + ":" + request.getServerPort()
+	+ path + "/";
 
 	Search search = new Search();
 	String searchContent = request.getParameter("keyword");
 	if (searchContent != null) {
 		searchContent = new String(searchContent.getBytes("8859_1"),
-				"GBK");
+		"GBK");
 	}
 	System.out.println("lovely====>out:" + searchContent);
-	List<Result> all = search.getResult(searchContent);
+
+	DuplicateRemoval resultAlls =search.getResult(searchContent); 
+	List<Result> all = resultAlls.getResults();
 	//List<Result> all = new ArrayList<Result>();
 %>
 
@@ -23,7 +25,7 @@
 <head>
 <base href="<%=basePath%>">
 
-<title>result of <%=searchContent%></title>
+<title><%=searchContent%></title>
 
 <meta http-equiv="pragma" content="no-cache">
 <meta http-equiv="cache-control" content="no-cache">
@@ -38,6 +40,20 @@
 
 <body align="center|left" marginwidth="100dp" marginheight="50dp"
 	style="width:40%">
+	<SCRIPT LANGUAGE="JavaScript">
+		var a = document.getElementsByName("keyword");
+		out.println("****************************");
+		v.values = searchContent;
+	</SCRIPT>
+	<script>
+		function myFunction(searchContent) {
+			var a = document.getElementsByName("keyword");
+			out.println("****************************");
+			v.values = searchContent;
+		}
+		document.getElementById("keyword1").innerHTML = myFunction(searchContent);
+	</script>
+
 	<div style="width:760px;margin:0px auto">
 		<a href="index.jsp"><img border="0" src="log.jpg"
 			alt="metacrawler" width="195" height="60"
@@ -61,6 +77,9 @@
 		</form>
 
 	</div>
+	<p>
+		搜索结果总数<%=resultAlls.getResults().size()%>重复数目：<%=resultAlls.getResultRepeat()%>
+	</p>
 	<%
 		for (int i = 0; i < all.size(); i++) {
 	%>
@@ -72,7 +91,7 @@
 	</br>
 	<a href=<%=all.get(i).getUrl()%>><%=all.get(i).getUrl()%></a>
 	</p>
-	 
+
 	<br></br>
 	<%
 		}
