@@ -12,15 +12,15 @@ public class BaseParser implements IParser {
 	public static final int GOOGLE = 0x00;
 	public static final int YAHOO = 0x01;
 	public static final int BAIDU = 0x02;
-
+	public static final int PAGE_COUNT = 5;
 	// lr=lang_zh-CN只搜索简体中文网页
 	// lr=lang_zh-TW只搜索繁体中文网页
 	// lr=lang_zh-CN|lang_zh-TW搜索所有中文网页
 	// lr=lang_en只搜索英文网页
 	// ct 语言限制。0-所有语言，1-简体中文网页，2-繁体中文网页；其它不确定或者无效或。默认值为0.ie=utf-8&lr=lang_zh-CN
-	private static final String GOOGLE_BASE_URL = "https://www.google.com.hk/search?num=30";
+	private static final String GOOGLE_BASE_URL = "https://www.google.com.hk/search?&cl=3";
 	// 在百度搜索中,浏览器URL有点问题,根URL后面应该是S?而不是#
-	private static final String BAIDU_BASE_URL = "http://www.baidu.com/s?ie=utf-8&rn=30";
+	private static final String BAIDU_BASE_URL = "http://www.baidu.com/s?ie=utf-8&cl=3";
 	// + "newwindow=1&" + "safe=strict&" + "espv=210&es_sm=93&" +
 	// "q=java+%E8%8E%B7%E5%8F%96google%E6%90%9C%E7%B4%A2%E7%BB%93%E6%9E%9C&"
 	// +
@@ -52,6 +52,11 @@ public class BaseParser implements IParser {
 	 */
 	public String getSearchContent(String seachContent, int type) {
 		String url = this.searchUrlConstruct(seachContent, type);
+		return netUtil.getPageContent(url);
+	}
+
+	public String getSearchContent(String seachContent, int type, int pn) {
+		String url = this.searchUrlConstruct(seachContent, type, pn);
 		return netUtil.getPageContent(url);
 	}
 
@@ -93,6 +98,47 @@ public class BaseParser implements IParser {
 			e.printStackTrace();
 		}
 		return url.toString();
+	}
+
+	/**
+	 * get the basic search url,baidu,yahoo,google....
+	 * 
+	 * @return
+	 */
+	public String searchUrlConstruct(String search, int searchType, int pn) {
+
+		StringBuffer url = new StringBuffer();
+		switch (searchType) {
+		case GOOGLE:
+			url.append(GOOGLE_BASE_URL);
+			url.append("&pn=");
+			url.append(pn);
+			url.append("&num=");
+			url.append(PAGE_COUNT);
+			url.append("&q=");
+			break;
+		case BAIDU:
+			url.append(BAIDU_BASE_URL);
+			url.append("&pn=");
+			url.append(pn);
+			url.append("&rn=");
+			url.append(PAGE_COUNT);
+			url.append("&wd=");
+			break;
+		default:
+			break;
+		}
+		try {
+			url.append(URLEncoder.encode(search, "utf-8"));
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		return url.toString();
+	}
+
+	public List<Result> parsePage(String pageContent, int pn) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

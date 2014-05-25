@@ -12,7 +12,7 @@ import com.meta.util.LOG;
 
 public class CopyOfBaiduParser extends BaseParser {
 
-	//URL正则式
+	// URL正则式
 	private static final String BAIDU_URL_REGEX = "http://www.baidu.com/.*?\"";// "(http://www.baidu.com/link?url=).*?";
 	// Title正则式
 	private static final String BAIDU_TITLE_REGEX = "<h3 class=\"t\">.*?</h3>";
@@ -58,6 +58,52 @@ public class CopyOfBaiduParser extends BaseParser {
 
 		int i = 0;
 		LOG.error("*********************" + sumaryMatcher.groupCount());
+		while (sumaryMatcher.find()) {
+			if (results.get(i).getUrl()
+					.startsWith("http://wenku.baidu.com/search?word=")) {
+				String content = sumaryMatcher.group(0);
+				LOG.error(content);
+				results.get(i)
+						.setSumary(
+								htmlUtil.getTheReplaced(content.replaceAll(
+										"<.*?>", "")));
+			} else {
+				String content = sumaryMatcher.group(0);
+				LOG.error(content);
+				results.get(i)
+						.setSumary(
+								htmlUtil.getTheReplaced(content.replaceAll(
+										"<.*?>", "")));
+			}
+			i++;
+		}
+		return results;
+	}
+
+	@Override
+	public List<Result> parsePage(String searchContent, int pn) {
+		HtmlUtil htmlUtil = new HtmlUtil(searchContent);
+		List<Result> results = new ArrayList<Result>();
+		String pageContent = super.getSearchContent(searchContent, BAIDU, pn);
+
+		Pattern sumaryPattern = Pattern.compile(sumaryRegex,
+				Pattern.CASE_INSENSITIVE);
+		Matcher sumaryMatcher = sumaryPattern.matcher(pageContent);
+
+		Pattern titlePattern = Pattern.compile(titleRegex,
+				Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
+		Matcher titleMatcher = titlePattern.matcher(pageContent);
+		// System.out.println(titleMatcher.find());
+		// 在URL中得到RESULT的TITLE 和URL
+		while (titleMatcher.find()) {
+			Result result = new Result();
+			String content = titleMatcher.group(0);
+			result.setTitle(htmlUtil.getTheReplaced(content.replaceAll("<.*?>",
+					"")));
+			result.setUrl(getBaiduUrl(content, urlRegex));
+			results.add(result);
+		}// end of while
+		int i = 0;
 		while (sumaryMatcher.find()) {
 			if (results.get(i).getUrl()
 					.startsWith("http://wenku.baidu.com/search?word=")) {
