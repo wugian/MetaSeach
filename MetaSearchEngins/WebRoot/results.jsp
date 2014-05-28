@@ -14,16 +14,37 @@
 		searchContent = new String(searchContent.getBytes("8859_1"),
 		"GBK");
 	}
-	System.out.println("lovely====>out:" + searchContent);
-
-	DuplicateRemoval resultAlls =search.getResult(searchContent); 
+	DuplicateRemoval resultAlls = search.getResult(searchContent);
 	List<Result> all = resultAlls.getResults();
-	int count =0;
-	//List<Result> all = new ArrayList<Result>();
+	int count = 0;
 %>
 
 <html>
 <head>
+<style>
+#content {
+	width: 500px;
+	height: 1900px;
+	margin: 20px auto;
+	padding: 5px;
+	line-height: 20px;
+	overflow: hidden;
+	word-spacing: normal;
+}
+
+#footer {
+	background-color: #99bbbb;
+	clear: both;
+	text-align: center;
+	margin-bottom: 0;
+}
+
+#pages {
+	height: 20px;
+	width: 500px;
+	margin: 5px auto;
+}
+</style>
 <base href="<%=basePath%>">
 
 <title><%=searchContent%></title>
@@ -41,34 +62,6 @@
 
 <body align="center|left" marginwidth="100dp" marginheight="50dp"
 	style="width:40%">
-	<script>
-		function myFunction() {
-			var x = "";
-			var time = new Date().getHours();
-			if (time < 20) {
-				x = "Good day";
-			}
-			document.getElementById("demo").innerHTML = x;
-		}
-	</script>
-
-
-
-
-
-	<SCRIPT LANGUAGE="JavaScript">
-		var a = document.getElementsByName("keyword");
-		out.println("****************************");
-		v.values = searchContent;
-	</SCRIPT>
-	<script>
-		function myFunction(searchContent) {
-			var a = document.getElementsByName("keyword");
-			out.println("****************************");
-			v.values = searchContent;
-		}
-		document.getElementById("keyword1").innerHTML = myFunction(searchContent);
-	</script>
 
 	<div style="width:760px;margin:0px auto">
 		<a href="index.jsp"><img border="0" src="log.jpg"
@@ -96,24 +89,45 @@
 	<p>
 		搜索结果总数<%=resultAlls.getResults().size()%>重复数目：<%=resultAlls.getResultRepeat()%>
 	</p>
-	<%
-		for (int i = count; (i < count + 10) && (i < all.size()); i++) {
-			Result curResult = all.get(count + i);
-	%>
-	<a href=<%=curResult.getUrl()%>><%=curResult.getTitle()%></a>
-	<br></br>
-	<%
-		out.println(curResult.getSumary());
-	%>
-	</br>
-	<a href=<%=curResult.getUrl()%>><%=curResult.getUrl()%></a>
-	</p>
 
-	<br></br>
-	<%
+	<div id="content">
+		<%
+			for (int i = count; (i < all.size()); i++) {
+			Result curResult = all.get(  i);
+		%>
+		<a href=<%=curResult.getUrl()%>><%=curResult.getTitle()+":"+curResult.getWeight()%></a>
+		<br></br>
+		<%
+			out.println(curResult.getSumary());
+		%>
+		</br> <a href=<%=curResult.getUrl()%>><%=curResult.getUrl()%></a>
+		</p>
+
+		<br></br>
+		<%
+			}
+				count += 10;
+				System.out.print("count" + count);
+		%>
+	</div>
+	<div id="pages"></div>
+	<script language="javascript">
+		var obj = document.getElementById("content");
+		var pages = document.getElementById("pages");
+		window.onload = function() {
+			var allpages = Math.ceil(parseInt(obj.scrollHeight)
+					/ parseInt(obj.offsetHeight));//换取分页数
+			pages.innerHTML = "<b>共" + allpages + "页</b>";
+			for ( var i = 1; i <= allpages; i++) {
+				pages.innerHTML += "<a href=\"javascript:show('" + i
+						+ "');\">第" + i + "页</a>&nbsp;";
+			}
 		}
-		count += 10;
-	%>
-	<div id="Loading" align=center click>Loading...</div>
+		function show(pageIndex) {
+			obj.scrollTop = (pageIndex - 1) * parseInt(obj.offsetHeight);
+			javascript: scroll(0, 0);
+		}
+	</script>
+	<div id="footer">……版权所有，有违必究……</div>
 </body>
 </html>

@@ -53,28 +53,26 @@ public class CopyOfBaiduParser extends BaseParser {
 			result.setTitle(htmlUtil.getTheReplaced(content.replaceAll("<.*?>",
 					"")));
 			result.setUrl(getBaiduUrl(content, urlRegex));
+			result.setBaidu(true);
 			results.add(result);
 		}// end of while
 
 		int i = 0;
 		LOG.error("*********************" + sumaryMatcher.groupCount());
+		int size = results.size();
 		while (sumaryMatcher.find()) {
-			if (results.get(i).getUrl()
-					.startsWith("http://wenku.baidu.com/search?word=")) {
+			try {
+				Result r = results.get(i);
+				double c = (double) (size - i) / (double) size;// 保留三位
+				r.setWeight(c * BAIDU_WEIGHT);
 				String content = sumaryMatcher.group(0);
 				LOG.error(content);
-				results.get(i)
-						.setSumary(
-								htmlUtil.getTheReplaced(content.replaceAll(
-										"<.*?>", "")));
-			} else {
-				String content = sumaryMatcher.group(0);
-				LOG.error(content);
-				results.get(i)
-						.setSumary(
-								htmlUtil.getTheReplaced(content.replaceAll(
-										"<.*?>", "")));
+				r.setSumary(htmlUtil.getTheReplaced(content.replaceAll("<.*?>",
+						"")));
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
+
 			i++;
 		}
 		return results;

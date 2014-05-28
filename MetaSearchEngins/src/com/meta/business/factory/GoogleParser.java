@@ -44,17 +44,26 @@ public class GoogleParser extends BaseParser {
 			String content = m.group(0);
 			result.setTitle(htmlUtil.getTheReplaced(content.replaceAll("<.*?>",
 					"")));
+			result.setGoogle(true);
 			result.setUrl(getGoogleUrl(content));
 			results.add(result);
 		}// end of while
-
 		int i = 0;
+		int size = results.size();
 		while (mm.find()) {
-			String content = mm.group(0);
-			results.get(i).setSumary(
-					htmlUtil.getTheReplaced(content.replaceAll("<.*?>", "")));
+
+			try {
+				Result r = results.get(i);
+				double c = (double) (size - i) / (double) size;// 保留小数
+				r.setWeight(c * GOOGLE_WEIGHT);
+				String content = mm.group(0);
+				r.setSumary(htmlUtil.getTheReplaced(content.replaceAll("<.*?>",
+						"")));
+			} catch (Exception e) {
+			}
 			i++;
 		}
+		LOG.error("google count:" + i);
 
 		for (int j = 0; j < results.size(); j++) {
 			LOG.debug(results.get(j).toString());
@@ -79,7 +88,7 @@ public class GoogleParser extends BaseParser {
 			String urlRex = "<a href=\".*?\"";
 			Pattern pCur = Pattern.compile(urlRex, Pattern.CASE_INSENSITIVE
 					| Pattern.DOTALL);
-			Matcher mCur = pa.matcher(content);
+			Matcher mCur = pCur.matcher(content);
 			if (mCur.find()) {
 				int s = url.indexOf("\"");
 				int e = url.indexOf("\"", s + 1);

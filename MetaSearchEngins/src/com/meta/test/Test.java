@@ -7,6 +7,7 @@ import java.net.MalformedURLException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -26,11 +27,15 @@ import com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException;
 import com.gargoylesoftware.htmlunit.NicelyResynchronizingAjaxController;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import com.meta.business.CalculateWeiht;
+import com.meta.business.DuplicateRemoval;
 import com.meta.business.SearchPlan;
 import com.meta.business.factory.BaiduFactory;
 import com.meta.business.factory.CopyOfBaiduFactory;
 import com.meta.business.factory.CopyOfBaiduParser;
+import com.meta.business.factory.GoogleFactory;
 import com.meta.business.factory.GoogleNewParser;
+import com.meta.business.factory.GoogleParser;
 import com.meta.business.intertace.IParser;
 import com.meta.model.Result;
 import com.meta.netutil.HttpUtil;
@@ -44,10 +49,26 @@ public class Test {
 	 */
 	public static void main(String[] args) throws UnsupportedEncodingException {
 
+		 
+		 CalculateWeiht cw = new CalculateWeiht();
+		
+		 IParser googleParser = new GoogleFactory().produce();
+		 List<Result> gr = null;
+		 gr = googleParser.parsePage("java 设计模式");
+		
+		 List<Result> grw = cw.calculateWeight(gr);
+//		double a = 1188;
+//		double b = 93;
+//		double c;
+//		int aa = 1;
+//		int bb = 200;
+//
+//		c = (double) aa / (double) bb;// 这样为保持2位
+//		System.out.println(c);
 		// new GoogleNewParser().parsePage("java 设计模式");
-		//new CopyOfBaiduParser().parsePage("java设计模式");
-		SearchPlan sp = new SearchPlan();
-		sp.getResult("java设计模式", "10", "20");
+		// new CopyOfBaiduParser().parsePage("java设计模式");
+		// SearchPlan sp = new SearchPlan();
+		// sp.getResult("java设计模式", "10", "20");
 		// http://www.baidu.com/s?ie=utf-8&word=%E5%A4%A9%E7%A9%BA
 		// String testSb = "http://www.baidu.com/s?ie=utf-8&wd=";
 		// String searchContent = URLEncoder.encode("天空");

@@ -11,6 +11,10 @@ public class DuplicateRemoval {
 	private List<Result> results = new ArrayList<Result>();
 	private int repeatCount = 0;
 
+	public void setResults(List<Result> all) {
+		this.results = all;
+	}
+
 	public void initial(List<Result> all) {
 		results.addAll(all);
 		for (Result r : all) {
@@ -28,12 +32,17 @@ public class DuplicateRemoval {
 		if (results == null) {
 			initial(all);
 		} else {
-			for (Result r : all) {
-				if (!tags.contains(r.getMd5())) {
+			for (int i = 0; i < all.size(); i++) {
+				Result r = all.get(i);
+				if (!tags.contains(r.getMd5())) {// if not exist add it to list
 					tags.add(r.getMd5());
 					results.add(r);
-				} else {
+				} else {// else repeatCount++ and add the weight
 					repeatCount++;
+					int location = tags.indexOf(r.getMd5());
+					Result rInAll = results.get(location);
+					rInAll.setWeight(rInAll.getWeight() + r.getWeight());
+					rInAll.setBaidu(true);
 				}
 			}
 		}

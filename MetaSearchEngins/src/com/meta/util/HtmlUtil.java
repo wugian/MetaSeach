@@ -58,14 +58,10 @@ public class HtmlUtil {
 			IWord word = null;
 			while ((word = seg.next()) != null) {
 				result.add(word.getValue());
-				// LOG.debug(word.getValue());
-				// LOG.debug(word.getPinyin());
 			}
 		} catch (JcsegException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return result;
