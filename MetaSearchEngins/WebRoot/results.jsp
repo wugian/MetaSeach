@@ -95,7 +95,15 @@
 			for (int i = count; (i < all.size()); i++) {
 			Result curResult = all.get(  i);
 		%>
-		<a href=<%=curResult.getUrl()%>><%=curResult.getTitle()+":"+curResult.getWeight()%></a>
+		<a href=<%=curResult.getUrl()%>><%=curResult.getTitle()%></a>
+		<%
+			if(curResult.isBaidu()){
+				out.println("<img src=baidu.jpg></img>");
+			}
+			if(curResult.isGoogle()){
+				out.println("<img src=google.jpg></img>");
+			}
+		%> 
 		<br></br>
 		<%
 			out.println(curResult.getSumary());
