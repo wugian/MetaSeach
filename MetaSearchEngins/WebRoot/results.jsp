@@ -103,7 +103,7 @@
 			if(curResult.isGoogle()){
 				out.println("<img src=google.jpg></img>");
 			}
-		%> 
+		%>
 		<br></br>
 		<%
 			out.println(curResult.getSumary());

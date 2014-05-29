@@ -3,6 +3,7 @@ package com.meta.business;
 import java.util.Collections;
 import java.util.List;
 
+import com.meta.business.intertace.ComparatorResult;
 import com.meta.model.Result;
 
 /**
